@@ -21,18 +21,18 @@ jobs:
           # Set an output parameter `uname` for use in subsequent steps
           run: |
             uname -a
-            dnf install bpftrace gcc make cmake bcc-devel git elfutils-libelf-devel llvm-devel clang-devel g++ flex bison -y
+            dnf install bison flex cmake make git gcc-c++ elfutils-libelf-devel zlib-devel llvm-devel clang-devel bcc-devel systemtap-sdt-devel binutils-devel -y
             echo ::set-output name=uname::$(uname -a)
+            mkdir build-dir && cd build-dir
+            git clone https://github.com/iovisor/bpftrace.git
+            cd bpftrace
+            mkdir build && cd build
+            cmake -DCMAKE_BUILD_TYPE=Debug ..
+            make -j2
+            cd tests
+            ./runtime-tests.sh
 
       - name: Get the output
         # Echo the `uname` output parameter from the `runcmd` step
         run: |
           echo "The uname output was ${{ steps.runcmd.outputs.uname }}"
-          mkdir build-dir && cd build-dir
-          git clone https://github.com/iovisor/bpftrace.git
-          cd bpftrace
-          mkdir build && cd build
-          cmake -DCMAKE_BUILD_TYPE=Debug ..
-          make -j2
-          cd tests
-          ./runtime-tests.sh
