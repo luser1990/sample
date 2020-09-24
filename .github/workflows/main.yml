@@ -1,0 +1,20 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  check:
+    name: ${{ matrix.arch }}-check
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: [s390x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: sudo apt install build-essential flex bison libelf-dev libssl-dev qemu-system-s390x
+    - name: Build & Test
+      run: make
+    - name: Test
+      run: ./sample && uname -a
