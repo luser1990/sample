@@ -28,7 +28,6 @@ jobs:
         # Echo the `uname` output parameter from the `runcmd` step
         run: |
           echo "The uname output was ${{ steps.runcmd.outputs.uname }}"
-          bpftrace --info
           mkdir build-dir && cd build-dir
           git clone https://github.com/iovisor/bpftrace.git
           cd bpftrace
