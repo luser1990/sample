@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   check:
     name: ${{ matrix.arch }}-check
-    runs-on: ubuntu-latest
+    runs-on: fedora-latest
     strategy:
       matrix:
         arch: [s390x]
