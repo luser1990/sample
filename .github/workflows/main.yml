@@ -3,8 +3,8 @@ on: [push, pull_request]
 jobs:
   s390x_job:
     # The host should always be Linux
-    runs-on: fedora_latest
-    name: Build on fedora s390x
+    runs-on: ubuntu20.04
+    name: Build on ubuntu s390x
     steps:
       - uses: actions/checkout@v2.1.0
       - uses: uraimo/run-on-arch-action@v2.0.5
@@ -12,7 +12,7 @@ jobs:
         id: runcmd
         with:
           arch: s390x
-          distro: fedora_latest
+          distro: ubuntu20.04
 
           # Not required, but speeds up builds by storing container images in
           # a GitHub package registry.
