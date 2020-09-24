@@ -5,15 +5,15 @@ on: [push, pull_request]
 jobs:
   check:
     name: ${{ matrix.arch }}-check
-    runs-on: fedora-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        arch: [s390x]
+        arch: [powerpc]
 
     steps:
     - uses: actions/checkout@v2
     - name: Install dependencies
-      run: sudo apt install build-essential flex bison libelf-dev libssl-dev qemu-system-s390x
+      run: sudo apt install build-essential flex bison libelf-dev libssl-dev qemu-system-ppc
     - name: Build & Test
       run: make
     - name: Test
