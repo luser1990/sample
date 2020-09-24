@@ -12,7 +12,7 @@ jobs:
         id: runcmd
         with:
           arch: s390x
-          distro: ubuntu20.04
+          distro: fedora_latest
 
           # Not required, but speeds up builds by storing container images in
           # a GitHub package registry.
@@ -21,12 +21,12 @@ jobs:
           # Set an output parameter `uname` for use in subsequent steps
           run: |
             uname -a
-            sudo dnf install bpftrace -y
-            sudo dnf builddep bpftrace -y
+            dnf install bpftrace -y
+            dnf builddep bpftrace -y
             echo ::set-output name=uname::$(uname -a)
 
       - name: Get the output
         # Echo the `uname` output parameter from the `runcmd` step
         run: |
           echo "The uname output was ${{ steps.runcmd.outputs.uname }}"
-          sudo bpftrace --info
+          bpftrace --info
